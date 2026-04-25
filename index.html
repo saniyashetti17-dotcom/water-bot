@@ -1,153 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Water Safety Awareness Bot</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaLab Water Safety Bot</title>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
 :root{
   --aqua:#00bcd4;
-  --teal:#0097a7;
-  --mint:#8ff5e7;
+  --teal:#00838f;
+  --mint:#80f7e5;
   --deep:#073b4c;
-  --glass:rgba(255,255,255,.72);
-  --border:rgba(255,255,255,.65);
   --safe:#16a34a;
   --mod:#f59e0b;
   --bad:#dc2626;
-  --shadow:0 18px 45px rgba(0,150,170,.18);
+  --glass:rgba(255,255,255,.72);
+  --border:rgba(255,255,255,.7);
+  --shadow:0 20px 50px rgba(0,150,170,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 body{
   min-height:100vh;
-  color:var(--deep);
   padding:22px;
-  overflow-x:hidden;
+  color:var(--deep);
   background:
-    radial-gradient(circle at 10% 10%, #bff8ff 0, transparent 26%),
-    radial-gradient(circle at 90% 5%, #dffef8 0, transparent 24%),
-    linear-gradient(135deg,#e7fbff,#f9ffff);
+    radial-gradient(circle at 10% 5%,#bff8ff 0,transparent 28%),
+    radial-gradient(circle at 90% 10%,#e0fff7 0,transparent 26%),
+    linear-gradient(135deg,#e7fbff,#f8ffff);
+  overflow-x:hidden;
 }
-.container{max-width:1400px;margin:auto;position:relative;z-index:2}
+.container{max-width:1420px;margin:auto;position:relative;z-index:2}
 
-/* Animated water background */
-.wave{
-  position:fixed;left:0;right:0;bottom:-35px;height:150px;
-  background:linear-gradient(90deg,#00bcd4,#4dd0e1,#80deea,#00bcd4);
-  opacity:.22;border-radius:45% 45% 0 0;
-  animation:wave 7s linear infinite;z-index:0;
+/* water drops */
+.drop{
+  position:fixed;top:-70px;font-size:26px;z-index:1;opacity:.55;
+  animation:dropFall linear infinite;
 }
-.wave.two{bottom:-55px;opacity:.15;animation-duration:11s}
-@keyframes wave{0%{transform:translateX(0)}100%{transform:translateX(-80px)}}
+.d1{left:8%;animation-duration:7s}
+.d2{left:22%;animation-duration:10s;animation-delay:2s}
+.d3{left:44%;animation-duration:8s;animation-delay:1s}
+.d4{left:70%;animation-duration:11s;animation-delay:3s}
+.d5{left:88%;animation-duration:9s;animation-delay:4s}
+@keyframes dropFall{
+  0%{transform:translateY(-80px) rotate(0);opacity:0}
+  20%{opacity:.7}
+  100%{transform:translateY(110vh) rotate(30deg);opacity:0}
+}
+
+/* floating bubbles */
 .bubble{
   position:fixed;bottom:-50px;border-radius:50%;
-  background:rgba(0,188,212,.18);animation:bubble 9s linear infinite;z-index:1;
+  background:rgba(0,188,212,.18);z-index:1;animation:bubble 9s linear infinite;
 }
-.b1{left:8%;width:18px;height:18px;animation-delay:0s}
-.b2{left:30%;width:28px;height:28px;animation-delay:2s}
-.b3{left:55%;width:14px;height:14px;animation-delay:4s}
-.b4{left:78%;width:34px;height:34px;animation-delay:1s}
-.b5{left:92%;width:20px;height:20px;animation-delay:5s}
-@keyframes bubble{0%{transform:translateY(0);opacity:.2}50%{opacity:.55}100%{transform:translateY(-850px);opacity:0}}
+.b1{left:8%;width:18px;height:18px}
+.b2{left:30%;width:30px;height:30px;animation-delay:2s}
+.b3{left:52%;width:16px;height:16px;animation-delay:4s}
+.b4{left:76%;width:36px;height:36px;animation-delay:1s}
+.b5{left:92%;width:22px;height:22px;animation-delay:5s}
+@keyframes bubble{
+  0%{transform:translateY(0);opacity:.15}
+  50%{opacity:.55}
+  100%{transform:translateY(-900px);opacity:0}
+}
+
+/* wave divider */
+.wave{
+  position:fixed;left:0;right:0;bottom:-50px;height:160px;
+  background:linear-gradient(90deg,#00bcd4,#4dd0e1,#80deea,#00bcd4);
+  opacity:.20;border-radius:45% 45% 0 0;z-index:0;
+  animation:waveMove 7s linear infinite;
+}
+.wave.two{bottom:-75px;opacity:.13;animation-duration:12s}
+@keyframes waveMove{100%{transform:translateX(-90px)}}
+
+/* glass glow */
+.glass,.dash,.phone,.hero,.meter-card{
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:28px;
+  animation:fadeUp .55s ease;
+}
+.glass:hover,.dash:hover,.meter-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 26px 60px rgba(0,150,170,.25);
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:none}
+}
 
 .hero{
-  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;
-  background:linear-gradient(135deg,rgba(0,188,212,.86),rgba(128,222,234,.78));
-  border:1px solid var(--border);border-radius:34px;padding:34px;
-  box-shadow:var(--shadow);color:white;margin-bottom:22px;position:relative;overflow:hidden;
-}
-.hero:after{
-  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
-  background:rgba(255,255,255,.16);right:-60px;top:-80px;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;
+  padding:34px;margin-bottom:22px;
+  background:linear-gradient(135deg,rgba(0,188,212,.88),rgba(128,222,234,.7));
+  color:white;overflow:hidden;position:relative;
 }
 .hero h1{font-size:44px;margin-bottom:10px}
-.hero p{font-size:17px;line-height:1.7;max-width:760px}
+.hero p{font-size:17px;line-height:1.7}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 button{
-  border:0;border-radius:14px;padding:11px 16px;cursor:pointer;font-weight:700;
-  background:var(--teal);color:white;transition:.25s;
+  border:0;border-radius:14px;padding:11px 16px;background:var(--teal);
+  color:white;font-weight:800;cursor:pointer;transition:.25s;
 }
-button:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 10px 22px rgba(0,151,167,.22)}
+button:hover{transform:translateY(-2px) scale(1.04)}
 .white-btn{background:white;color:var(--teal)}
 .danger{background:var(--bad)!important}
 
-/* Fixed Circular Meter */
-.meter-box{
-  background:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.5);
-  backdrop-filter:blur(12px);border-radius:28px;padding:22px;text-align:center;z-index:2;
+.visual-box{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;
 }
-.water-meter{
-  width:220px;height:220px;margin:0 auto 12px;border-radius:50%;
-  background:conic-gradient(var(--meter-color,#94a3b8) 0deg, #e2f7fb 0deg);
-  display:grid;place-items:center;position:relative;
-  box-shadow:0 20px 40px rgba(0,100,120,.20);
-  transition:background 1s ease;animation:pulse 2.4s infinite ease-in-out;
+.hero-img{
+  width:100%;max-width:210px;margin:auto;
+  animation:floatImg 3s ease-in-out infinite;
+  filter:drop-shadow(0 20px 24px rgba(0,80,100,.18));
 }
-.water-meter:before{
-  content:"";position:absolute;inset:18px;border-radius:50%;
-  background:linear-gradient(180deg,#fff,#edfeff);
+@keyframes floatImg{
+  50%{transform:translateY(-12px)}
 }
-.meter-inner{position:relative;text-align:center;color:var(--deep)}
-#scoreValue{font-size:42px;font-weight:900}
-#scoreSub{font-size:14px;color:#4b7280;font-weight:700}
-@keyframes pulse{50%{transform:scale(1.025)}}
+.lottie-box{
+  background:rgba(255,255,255,.22);
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:26px;padding:8px;
+}
 
-.dashboard{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px;
-}
-.dash,.glass{
-  background:var(--glass);backdrop-filter:blur(14px);
-  border:1px solid var(--border);border-radius:24px;padding:18px;box-shadow:var(--shadow);
-  animation:fade .45s ease;
-}
-.dash{text-align:center}
-.dash .icon{font-size:26px;margin-bottom:6px}
+/* dashboard */
+.dashboard{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px}
+.dash{text-align:center;padding:18px;border-radius:24px}
+.dash .icon{font-size:28px;margin-bottom:6px}
 .dash .label{font-size:13px;color:#55717b;margin-bottom:6px}
 .dash .value{font-size:22px;font-weight:900}
 
+.safe{color:var(--safe)} .mod{color:var(--mod)} .bad{color:var(--bad)}
 .insights{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-.insights h3{color:var(--teal);font-size:16px;margin-bottom:8px}
-.insights p{font-size:14px;line-height:1.6}
+.insights h3{font-size:16px;color:var(--teal);margin-bottom:8px}
+.insights p{font-size:14px;line-height:1.7}
 
-.main{
-  display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:start;
-}
+/* layout */
+.main{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
+.glass{padding:20px;margin-bottom:18px}
 h2{color:var(--teal);font-size:22px;margin-bottom:12px;border-left:6px solid var(--aqua);padding-left:10px}
 .desc,li{font-size:15px;line-height:1.8}
 ul{padding-left:22px}
 .intent-list{padding-left:0}
 .intent-list li{
-  list-style:none;background:rgba(255,255,255,.62);border:1px solid #d8f3f7;
-  border-radius:14px;margin-bottom:9px;padding:10px 12px;font-size:14px;
+  list-style:none;background:rgba(255,255,255,.65);
+  border:1px solid #d8f3f7;border-radius:14px;padding:10px;margin-bottom:9px;
+  font-size:14px;line-height:1.6;
 }
-.intent-list li.active{border:2px solid var(--aqua);background:#e8fdff;font-weight:800}
+.intent-list li.active{border:2px solid var(--aqua);background:#e8fdff;font-weight:900}
 .intent-name{color:var(--teal);font-weight:900}
 
+/* phone chat */
 .phone{
-  width:100%;max-width:620px;margin:auto;background:#ffffff;border-radius:36px;
-  padding:18px;border:10px solid #dff8fb;box-shadow:0 25px 55px rgba(0,100,130,.18);
+  width:100%;max-width:650px;margin:auto;padding:18px;border:10px solid #dff8fb;
+  background:#fff;border-radius:38px;
 }
-.phone-top{height:18px;display:flex;justify-content:center;align-items:center}
-.notch{width:90px;height:6px;background:#c8eef3;border-radius:99px}
+.notch{width:90px;height:6px;background:#c8eef3;border-radius:99px;margin:0 auto 12px}
 .chat-head{
-  background:linear-gradient(135deg,var(--teal),var(--aqua));color:white;
-  border-radius:24px;padding:18px;text-align:center;margin-bottom:12px;
+  background:linear-gradient(135deg,var(--teal),var(--aqua));
+  color:white;border-radius:24px;padding:18px;text-align:center;margin-bottom:12px;
 }
 .status{
   background:#fff7df;border:1px solid #ffd873;color:#856000;
-  border-radius:14px;padding:11px;font-size:14px;margin-bottom:10px;
+  padding:11px;border-radius:14px;font-size:14px;margin-bottom:10px;
 }
 .progress{height:12px;background:#e5f5f8;border-radius:99px;overflow:hidden;margin-bottom:7px}
 #progressBar{height:100%;width:0%;background:linear-gradient(90deg,var(--mint),var(--aqua));transition:.35s}
 #progressText{font-size:13px;color:#66828a;margin-bottom:10px}
+
 .chips,.quick,.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .chip{
   background:#effeff;color:var(--teal);border:1px solid #c5f2f7;
-  border-radius:99px;padding:8px 12px;font-size:13px;font-weight:800;
+  border-radius:99px;padding:8px 12px;font-size:13px;font-weight:900;cursor:pointer;
 }
 .chat-box{
-  height:380px;overflow:auto;background:linear-gradient(180deg,#f9feff,#eefcff);
+  height:370px;overflow:auto;background:linear-gradient(180deg,#f9feff,#eefcff);
   border:1px solid #d6f2f7;border-radius:22px;padding:14px;margin-bottom:12px;
 }
 .bot-message,.user-message{
@@ -158,6 +189,15 @@ ul{padding-left:22px}
 .user-message{background:#dff7f2;color:#145c4d;margin-left:auto;border-top-right-radius:5px}
 @keyframes msg{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
+.typing{display:none;background:#e6fafd;color:#0f4c5c;width:75px;padding:12px;border-radius:18px;margin:8px 0}
+.typing span{
+  display:inline-block;width:7px;height:7px;background:#0097a7;border-radius:50%;
+  animation:dots 1s infinite;margin:0 2px;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes dots{50%{transform:translateY(-5px)}}
+
 .input-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-bottom:12px}
 input{border:1px solid #cbeef3;border-radius:14px;padding:12px;outline:none}
 
@@ -166,51 +206,67 @@ input{border:1px solid #cbeef3;border-radius:14px;padding:12px;outline:none}
 .field label{font-size:12px;color:#63808a}
 .field input{border:0;background:transparent;width:100%;font-weight:900;padding:5px 0;color:var(--deep)}
 
-.result-panel{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;
+.meter-card{text-align:center;padding:18px;margin-bottom:14px}
+.water-meter{
+  width:210px;height:210px;border-radius:50%;margin:0 auto 12px;
+  background:conic-gradient(#94a3b8 0deg,#e2f7fb 0deg);
+  display:grid;place-items:center;position:relative;
+  transition:background 1s ease;animation:pulse 2.2s infinite ease-in-out;
 }
-.lab-report{position:relative;overflow:hidden}
-.lab-report:before{
-  content:"LAB REPORT";position:absolute;right:-26px;top:20px;transform:rotate(35deg);
-  color:rgba(0,151,167,.12);font-size:36px;font-weight:900;
+.water-meter:before{
+  content:"";position:absolute;inset:18px;border-radius:50%;
+  background:linear-gradient(180deg,#fff,#eaffff);
+  box-shadow:inset 0 -35px 45px rgba(0,188,212,.13);
 }
+.water-meter:after{
+  content:"";position:absolute;bottom:20px;left:32px;right:32px;
+  height:var(--fill-height,0%);
+  background:linear-gradient(180deg,#80deea,#00bcd4);
+  border-radius:0 0 90px 90px;
+  opacity:.55;transition:height 1s ease;
+}
+.meter-inner{position:relative;z-index:3;text-align:center}
+#scoreValue{font-size:40px;font-weight:900}
+#scoreSub{font-size:14px;color:#4b7280;font-weight:800}
+@keyframes pulse{50%{transform:scale(1.025)}}
+
+/* result pulse */
+.result-pulse-safe{animation:greenPulse 1.2s ease}
+.result-pulse-mod{animation:orangePulse 1.2s ease}
+.result-pulse-bad{animation:redPulse 1.2s ease}
+@keyframes greenPulse{50%{box-shadow:0 0 35px rgba(22,163,74,.45)}}
+@keyframes orangePulse{50%{box-shadow:0 0 35px rgba(245,158,11,.45)}}
+@keyframes redPulse{50%{box-shadow:0 0 35px rgba(220,38,38,.45)}}
+
+.result-panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
 .report-content,.history-content{font-size:14px;line-height:1.8;white-space:pre-line}
 .history-item{
   background:#f8feff;border:1px solid #d8f3f7;border-radius:16px;padding:12px;margin-bottom:10px;
-  animation:fade .35s ease;
 }
 .tag{display:inline-block;padding:5px 10px;border-radius:99px;color:white;font-size:12px;font-weight:900;margin-top:5px}
-.safe{color:var(--safe)} .mod{color:var(--mod)} .bad{color:var(--bad)}
 .tag-safe{background:var(--safe)} .tag-mod{background:var(--mod)} .tag-bad{background:var(--bad)}
-
-.disease{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-.disease-card{background:#f8feff;border:1px solid #d8f3f7;border-radius:18px;padding:14px}
-.disease-card h4{color:var(--teal);margin-bottom:6px}
-.disease-card p{font-size:13px;line-height:1.6;color:#456}
-
 .warning{
   display:none;background:linear-gradient(135deg,#ef4444,#dc2626);color:white;
   padding:14px;border-radius:18px;margin-bottom:16px;font-weight:900;animation:shake .55s ease;
 }
 @keyframes shake{25%{transform:translateX(4px)}50%{transform:translateX(-4px)}75%{transform:translateX(2px)}}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .popup{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:99}
 .popup.show{display:flex}
 .popup-card{background:white;border-radius:26px;padding:30px;text-align:center;width:min(90vw,420px);animation:pop .25s ease}
 .check{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:var(--safe);color:white;font-size:40px;margin:0 auto 12px}
 @keyframes pop{from{transform:scale(.86);opacity:0}to{transform:scale(1);opacity:1}}
+.footer{text-align:center;margin:22px 0;color:#55717b;font-weight:800}
 
-.footer{text-align:center;margin:22px 0;color:#55717b;font-weight:700}
 @media(max-width:1100px){
   .hero,.main,.result-panel{grid-template-columns:1fr}
   .dashboard{grid-template-columns:repeat(2,1fr)}
   .insights{grid-template-columns:1fr 1fr}
-  .sample-grid,.disease{grid-template-columns:1fr}
+  .sample-grid{grid-template-columns:1fr}
 }
 @media(max-width:650px){
-  body{padding:12px}.hero h1{font-size:30px}.dashboard{grid-template-columns:1fr}
-  .insights{grid-template-columns:1fr}.input-row{grid-template-columns:1fr}
+  body{padding:12px}.hero h1{font-size:30px}.dashboard,.insights{grid-template-columns:1fr}
+  .input-row{grid-template-columns:1fr}.visual-box{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -218,235 +274,343 @@ input{border:1px solid #cbeef3;border-radius:14px;padding:12px;outline:none}
 <body>
 <div class="wave"></div><div class="wave two"></div>
 <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div><div class="bubble b5"></div>
+<div class="drop d1">💧</div><div class="drop d2">💧</div><div class="drop d3">💧</div><div class="drop d4">💧</div><div class="drop d5">💧</div>
 
 <div class="container">
-  <div class="warning" id="alertBanner">🚨 Unsafe water detected. Avoid direct drinking and purify immediately.</div>
+<div class="warning" id="alertBanner">🚨 Unsafe water detected. Avoid direct drinking and purify immediately.</div>
 
-  <section class="hero">
-    <div>
-      <h1>💧 AquaLab Water Safety Bot</h1>
-      <p>Smart water-quality awareness chatbot with animated safety meter, live dashboard, lab-style reports, health risk tips, and history tracking.</p>
-      <div class="hero-actions">
-        <button class="white-btn" onclick="startNewCheck()">🆕 New Check</button>
-        <button class="white-btn" onclick="runSampleDemo()">⚡ Sample Demo</button>
-        <button class="white-btn" onclick="resetDashboard()">🔄 Reset Dashboard</button>
-      </div>
+<section class="hero">
+  <div>
+    <h1>💧 AquaLab Water Safety Bot</h1>
+    <p>Smart water-quality awareness chatbot with live smart detection, animated safety meter, Lottie animation, lab reports, and history tracking.</p>
+    <div class="hero-actions">
+      <button class="white-btn" onclick="startNewCheck()">🆕 New Check</button>
+      <button class="white-btn" onclick="runSampleDemo()">⚡ Sample Demo</button>
+      <button class="white-btn" onclick="resetDashboard()">🔄 Reset Dashboard</button>
     </div>
-    <div class="meter-box">
-      <div class="water-meter" id="waterMeter">
-        <div class="meter-inner">
-          <div id="scoreValue">0</div>
-          <div id="scoreSub">No score yet</div>
-        </div>
-      </div>
-      <strong id="scoreText">Circular score meter will update after report.</strong>
+  </div>
+  <div class="visual-box">
+    <div class="lottie-box">
+      <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_vnikrcia.json" background="transparent" speed="1" style="width:100%;height:220px" loop autoplay></lottie-player>
     </div>
-  </section>
+    <img class="hero-img" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f9ea.svg" alt="Water Testing">
+  </div>
+</section>
 
-  <section class="dashboard">
-    <div class="dash"><div class="icon">📊</div><div class="label">Total Checks</div><div class="value" id="totalChecks">0</div></div>
-    <div class="dash"><div class="icon">✅</div><div class="label">Safe</div><div class="value safe" id="safeCount">0</div></div>
-    <div class="dash"><div class="icon">⚠️</div><div class="label">Moderate</div><div class="value mod" id="moderateCount">0</div></div>
-    <div class="dash"><div class="icon">❌</div><div class="label">Unsafe</div><div class="value bad" id="unsafeCount">0</div></div>
-    <div class="dash"><div class="icon">📌</div><div class="label">Latest Result</div><div class="value" id="latestResult">N/A</div></div>
-    <div class="dash"><div class="icon">🆔</div><div class="label">Latest Report ID</div><div class="value" id="latestReportId">N/A</div></div>
-  </section>
+<section class="dashboard">
+  <div class="dash"><div class="icon">📊</div><div class="label">Total Checks</div><div class="value" id="totalChecks">0</div></div>
+  <div class="dash"><div class="icon">✅</div><div class="label">Safe</div><div class="value safe" id="safeCount">0</div></div>
+  <div class="dash"><div class="icon">⚠️</div><div class="label">Moderate</div><div class="value mod" id="moderateCount">0</div></div>
+  <div class="dash"><div class="icon">❌</div><div class="label">Unsafe</div><div class="value bad" id="unsafeCount">0</div></div>
+  <div class="dash"><div class="icon">📌</div><div class="label">Live Result</div><div class="value" id="latestResult">N/A</div></div>
+  <div class="dash"><div class="icon">🆔</div><div class="label">Latest Report ID</div><div class="value" id="latestReportId">N/A</div></div>
+</section>
 
-  <section class="insights">
-    <div class="insight-card"><h3>📍 Most Common Source</h3><p id="mostCommonSource">Not available.</p></div>
-    <div class="insight-card"><h3>📉 Unsafe Percentage</h3><p id="unsafePercent">0%</p></div>
-    <div class="insight-card"><h3>📈 Safe Percentage</h3><p id="safePercent">0%</p></div>
-    <div class="insight-card"><h3>🧪 Average pH</h3><p id="avgPh">Not available.</p></div>
-  </section>
+<section class="insights">
+  <div class="glass"><h3>📍 Most Common Source</h3><p id="mostCommonSource">Not available.</p></div>
+  <div class="glass"><h3>📉 Unsafe Percentage</h3><p id="unsafePercent">0%</p></div>
+  <div class="glass"><h3>📈 Safe Percentage</h3><p id="safePercent">0%</p></div>
+  <div class="glass"><h3>🧪 Average pH</h3><p id="avgPh">Not available.</p></div>
+</section>
 
-  <main class="main">
-    <div>
-      <div class="glass">
-        <h2>Project Description</h2>
-        <p class="desc">Water Safety Awareness Bot helps users check basic water safety through a conversation. It collects water source, color, smell, clarity and pH, then gives Safe, Moderate Risk or Unsafe result with score and purification suggestion.</p>
-      </div><br>
+<main class="main">
+<div>
+  <div class="glass">
+    <h2>Project Description</h2>
+    <p class="desc">Water Safety Awareness Bot checks water safety using source, color, smell, clarity and pH. It shows live score, safety result, purification suggestion, disease risk and lab-style report.</p>
+  </div>
+  <div class="glass">
+    <h2>Objectives</h2>
+    <ul>
+      <li>To develop a water safety awareness chatbot.</li>
+      <li>To collect water details step-by-step.</li>
+      <li>To show live prediction and score.</li>
+      <li>To provide purification and health risk guidance.</li>
+      <li>To maintain dashboard, report and history.</li>
+    </ul>
+  </div>
+  <div class="glass">
+    <h2>Intent Flow Used in Bot</h2>
+    <ul class="intent-list" id="intentList">
+      <li data-step="0"><span class="intent-name">Default Welcome Intent</span> — Greets user</li>
+      <li data-step="1"><span class="intent-name">water.check.start</span> — Starts flow</li>
+      <li data-step="2"><span class="intent-name">water.check.source</span> — Source</li>
+      <li data-step="3"><span class="intent-name">water.check.color</span> — Color</li>
+      <li data-step="4"><span class="intent-name">water.check.smell</span> — Smell</li>
+      <li data-step="5"><span class="intent-name">water.check.clarity</span> — Clarity</li>
+      <li data-step="6"><span class="intent-name">water.check.ph_known</span> — pH known</li>
+      <li data-step="7"><span class="intent-name">water.check.ph_value</span> — pH value</li>
+      <li data-step="8"><span class="intent-name">water.check.result</span> — Result</li>
+      <li data-step="9"><span class="intent-name">water.risk.info</span> — Risk info</li>
+      <li data-step="10"><span class="intent-name">water.safety.tips</span> — Tips</li>
+      <li data-step="11"><span class="intent-name">water.emergency.help</span> — Emergency</li>
+      <li data-step="12"><span class="intent-name">water.restart</span> — Restart</li>
+      <li data-step="13"><span class="intent-name">water.cancel</span> — Cancel</li>
+      <li data-step="14"><span class="intent-name">Default Fallback Intent</span> — Unknown input</li>
+    </ul>
+  </div>
+</div>
 
-      <div class="glass">
-        <h2>Objectives</h2>
-        <ul>
-          <li>To create a water safety awareness chatbot.</li>
-          <li>To collect water quality details step-by-step.</li>
-          <li>To show safety result with water quality score.</li>
-          <li>To give disease risk and purification suggestions.</li>
-          <li>To maintain dashboard, history and report export.</li>
-        </ul>
-      </div><br>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="chat-head"><h2>AquaBot Chat Panel</h2><p>Smart input detection + intent flow</p></div>
 
-      <div class="glass">
-        <h2>Intent Flow Used in Bot</h2>
-        <ul class="intent-list" id="intentList">
-          <li data-step="0"><span class="intent-name">Default Welcome Intent</span> — Greets user</li>
-          <li data-step="1"><span class="intent-name">water.check.start</span> — Starts flow</li>
-          <li data-step="2"><span class="intent-name">water.check.source</span> — Source</li>
-          <li data-step="3"><span class="intent-name">water.check.color</span> — Color</li>
-          <li data-step="4"><span class="intent-name">water.check.smell</span> — Smell</li>
-          <li data-step="5"><span class="intent-name">water.check.clarity</span> — Clarity</li>
-          <li data-step="6"><span class="intent-name">water.check.ph_known</span> — pH known?</li>
-          <li data-step="7"><span class="intent-name">water.check.ph_value</span> — pH value</li>
-          <li data-step="8"><span class="intent-name">water.check.result</span> — Result</li>
-          <li data-step="9"><span class="intent-name">water.risk.info</span> — Risk info</li>
-          <li data-step="10"><span class="intent-name">water.safety.tips</span> — Tips</li>
-          <li data-step="11"><span class="intent-name">water.emergency.help</span> — Emergency help</li>
-          <li data-step="12"><span class="intent-name">water.restart</span> — Restart</li>
-          <li data-step="13"><span class="intent-name">water.cancel</span> — Cancel</li>
-          <li data-step="14"><span class="intent-name">Default Fallback Intent</span> — Unknown input</li>
-        </ul>
-      </div>
-    </div>
+  <div class="status" id="currentIntentBox"><strong>Current Intent:</strong> Default Welcome Intent</div>
+  <div class="progress"><div id="progressBar"></div></div>
+  <div id="progressText">Step 0 of 7</div>
+  <div class="chips" id="suggestionChips"></div>
 
-    <div class="phone">
-      <div class="phone-top"><div class="notch"></div></div>
-      <div class="chat-head">
-        <h2>AquaBot Chat Panel</h2>
-        <p>Intent-by-intent working chatbot</p>
-      </div>
-
-      <div class="status" id="currentIntentBox"><strong>Current Intent:</strong> Default Welcome Intent</div>
-      <div class="progress"><div id="progressBar"></div></div>
-      <div id="progressText">Step 0 of 7</div>
-
-      <div class="chips" id="suggestionChips"></div>
-
-      <div class="chat-box" id="chatBox">
-        <div class="bot-message">Hello, I am your AquaLab Water Safety Bot.
-Type:
-1. hi
-2. check water
-3. safety tips
-4. health risk</div>
-      </div>
-
-      <div class="quick">
-        <button onclick="quickMsg('hi')">👋 Hi</button>
-        <button onclick="quickMsg('check water')">💧 Check Water</button>
-        <button onclick="quickMsg('safety tips')">🧼 Tips</button>
-        <button onclick="quickMsg('health risk')">⚕️ Risk</button>
-        <button class="danger" onclick="quickMsg('cancel')">Cancel</button>
-      </div>
-
-      <div class="input-row">
-        <input id="userInput" placeholder="Type your message..." />
-        <button onclick="speakLastBotMessage()">🔊</button>
-        <button onclick="sendMessage()">Send</button>
-      </div>
-
-      <div class="sample-grid">
-        <div class="field"><label>💧 Source</label><input id="fieldSource" readonly></div>
-        <div class="field"><label>🎨 Color</label><input id="fieldColor" readonly></div>
-        <div class="field"><label>👃 Smell</label><input id="fieldSmell" readonly></div>
-        <div class="field"><label>🌫 Clarity</label><input id="fieldClarity" readonly></div>
-        <div class="field"><label>🧪 pH</label><input id="fieldPh" readonly></div>
-      </div>
-
-      <div class="glass" id="purificationBox"><strong>Purification Suggestion:</strong><br>Advice will appear after report.</div>
-
-      <div class="disease">
-        <div class="disease-card"><h4>🦠 Cholera</h4><p>Risk increases with contaminated water.</p></div>
-        <div class="disease-card"><h4>🌡 Typhoid</h4><p>Can spread through unsafe water or food.</p></div>
-        <div class="disease-card"><h4>⚕️ Diarrhea</h4><p>Common effect of unsafe drinking water.</p></div>
-      </div>
-    </div>
-  </main>
-
-  <section class="result-panel">
-    <div class="glass lab-report">
-      <h2>Latest Water Lab Report</h2>
-      <div class="report-content" id="reportContent">No report generated yet.</div>
-      <br>
-      <button onclick="downloadReport()">⬇ Download Report</button>
-      <button onclick="printReport()">🖨 Print</button>
-    </div>
-
-    <div class="glass">
-      <h2>Recent Water Checks</h2>
-      <div class="tools">
-        <button onclick="clearHistory()">Clear History</button>
-        <button onclick="exportCSV()">Export CSV</button>
-      </div>
-      <br>
-      <input class="search-box" id="searchBox" placeholder="Search by source/result..." oninput="renderHistory()">
-      <div class="history-content" id="historyContent">No history available.</div>
-    </div>
-  </section>
-
-  <div class="glass" style="margin-top:20px">
-    <h2>Conclusion</h2>
-    <p class="desc">This chatbot converts water safety awareness into a simple interactive system. It helps users understand basic safety conditions and encourages purification before use.</p>
+  <div class="chat-box" id="chatBox">
+    <div class="bot-message">Hello, I am your AquaLab Water Safety Bot.
+Type anything like:
+- check water
+- tap water
+- muddy
+- bad smell
+- pH is 5
+- safety tips</div>
+    <div class="typing" id="typingDots"><span></span><span></span><span></span></div>
   </div>
 
-  <div class="footer">Safe Water, Better Health</div>
+  <div class="quick">
+    <button onclick="quickMsg('hi')">Hi</button>
+    <button onclick="quickMsg('check water')">Check Water</button>
+    <button onclick="quickMsg('muddy water bad smell ph 5')">Smart Demo</button>
+    <button onclick="quickMsg('safety tips')">Tips</button>
+    <button class="danger" onclick="quickMsg('cancel')">Cancel</button>
+  </div>
+
+  <div class="input-row">
+    <input id="userInput" placeholder="Type your message...">
+    <button onclick="speakLastBotMessage()">🔊</button>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <div class="sample-grid">
+    <div class="field"><label>💧 Source</label><input id="fieldSource" readonly></div>
+    <div class="field"><label>🎨 Color</label><input id="fieldColor" readonly></div>
+    <div class="field"><label>👃 Smell</label><input id="fieldSmell" readonly></div>
+    <div class="field"><label>🌫 Clarity</label><input id="fieldClarity" readonly></div>
+    <div class="field"><label>🧪 pH</label><input id="fieldPh" readonly></div>
+  </div>
+
+  <div class="meter-card" id="meterCard">
+    <h2>Live Water Filling Meter</h2>
+    <div class="water-meter" id="waterMeter">
+      <div class="meter-inner">
+        <div id="scoreValue">0</div>
+        <div id="scoreSub">No score yet</div>
+      </div>
+    </div>
+    <b id="scoreText">Meter updates on every important input.</b>
+  </div>
+
+  <div class="glass" id="purificationBox"><strong>Purification Suggestion:</strong><br>Advice will appear here.</div>
+</div>
+</main>
+
+<section class="result-panel">
+  <div class="glass">
+    <h2>Latest Water Lab Report</h2>
+    <div class="report-content" id="reportContent">No report generated yet.</div><br>
+    <button onclick="generateManualReport()">Generate Report</button>
+    <button onclick="downloadReport()">Download Report</button>
+    <button onclick="printReport()">Print</button>
+  </div>
+
+  <div class="glass">
+    <h2>Recent Water Checks</h2>
+    <div class="tools">
+      <button onclick="clearHistory()">Clear History</button>
+      <button onclick="exportCSV()">Export CSV</button>
+    </div><br>
+    <input id="searchBox" placeholder="Search by source/result..." oninput="renderHistory()">
+    <div class="history-content" id="historyContent">No history available.</div>
+  </div>
+</section>
+
+<div class="glass">
+  <h2>Possible Health Concerns</h2>
+  <div class="insights">
+    <div><h3>🦠 Cholera</h3><p>Risk increases with contaminated water.</p></div>
+    <div><h3>🌡 Typhoid</h3><p>May spread through unsafe drinking water.</p></div>
+    <div><h3>⚕️ Diarrhea</h3><p>Common result of unsafe water consumption.</p></div>
+    <div><h3>🧼 Prevention</h3><p>Boil, filter and store water in clean container.</p></div>
+  </div>
+</div>
+
+<div class="footer">Safe Water, Better Health</div>
 </div>
 
 <div class="popup" id="successPopup">
   <div class="popup-card">
     <div class="check">✓</div>
-    <h2>Water Check Completed</h2>
-    <p>Your water safety report has been generated.</p>
-    <br><button onclick="closePopup()">OK</button>
+    <h2>Report Generated</h2>
+    <p>Water safety report saved successfully.</p><br>
+    <button onclick="closePopup()">OK</button>
   </div>
 </div>
 
 <script>
-let step=0, lastBotMessage="", reportCounter=parseInt(localStorage.getItem("waterBotReportCounter")||"0",10);
+let step=0,lastBotMessage="",reportCounter=parseInt(localStorage.getItem("waterBotReportCounter")||"0",10);
 let reportData={source:"",color:"",smell:"",clarity:"",phKnown:"",ph:"",result:"",score:0,timestamp:"",reportId:""};
 const stepMap={0:"Default Welcome Intent",1:"water.check.start",2:"water.check.source",3:"water.check.color",4:"water.check.smell",5:"water.check.clarity",6:"water.check.ph_known",7:"water.check.ph_value",8:"water.check.result",9:"water.risk.info",10:"water.safety.tips",11:"water.emergency.help",12:"water.restart",13:"water.cancel",14:"Default Fallback Intent"};
 
-function getCurrentDateTime(){
-  return new Date().toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});
-}
-function addMessage(m,s){let d=document.createElement("div");d.className=s==="user"?"user-message":"bot-message";d.innerText=m;chatBox.appendChild(d);chatBox.scrollTop=chatBox.scrollHeight;if(s==="bot")lastBotMessage=m}
+function now(){return new Date().toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true})}
+function addMessage(m,s){let d=document.createElement("div");d.className=s==="user"?"user-message":"bot-message";d.innerText=m;typingDots.before(d);chatBox.scrollTop=chatBox.scrollHeight;if(s==="bot")lastBotMessage=m}
+function showTyping(){typingDots.style.display="block";chatBox.scrollTop=chatBox.scrollHeight}
+function hideTyping(){typingDots.style.display="none"}
 function speakLastBotMessage(){if(!lastBotMessage)return;let u=new SpeechSynthesisUtterance(lastBotMessage);u.lang="en-US";speechSynthesis.speak(u)}
 function updateIntentUI(x){currentIntentBox.innerHTML=`<strong>Current Intent:</strong> ${stepMap[x]}`;document.querySelectorAll("#intentList li").forEach(li=>li.classList.toggle("active",parseInt(li.dataset.step)===x))}
 function updateProgress(){let c=Math.min(step,7);progressBar.style.width=(c/7*100)+"%";progressText.innerText=`Step ${c} of 7`}
-function setSuggestionChips(t){let a=t==="source"?["tap water","borewell","river water","lake water"]:t==="color"?["clear","yellow","muddy","green","dark"]:t==="smell"?["no smell","bad smell","chemical smell"]:t==="clarity"?["clear","slightly dirty","dirty"]:t==="yesno"?["yes","no"]:t==="ph"?["5","6.5","7","8"]:t==="result"?["health risk","safety tips","restart"]:["hi","hello","check water"];suggestionChips.innerHTML=a.map(x=>`<button class="chip" onclick="quickMsg('${x}')">${x}</button>`).join("")}
-function updateSummaryFields(){fieldSource.value=reportData.source;fieldColor.value=reportData.color;fieldSmell.value=reportData.smell;fieldClarity.value=reportData.clarity;fieldPh.value=reportData.ph}
-function evaluateResult(){let c=reportData.color.toLowerCase(),s=reportData.smell.toLowerCase(),cl=reportData.clarity.toLowerCase(),p=parseFloat(reportData.ph);if(c.includes("muddy")||c.includes("green")||c.includes("dark")||s.includes("bad")||s.includes("chemical")||cl.includes("dirty")||(!isNaN(p)&&(p<6||p>8.5)))return"Unsafe";if(c.includes("yellow")||cl.includes("slightly")||reportData.phKnown==="no"||reportData.ph==="")return"Moderate Risk";return"Safe"}
-function calculateScore(){let score=100,c=reportData.color.toLowerCase(),s=reportData.smell.toLowerCase(),cl=reportData.clarity.toLowerCase(),p=parseFloat(reportData.ph);if(c.includes("yellow"))score-=15;if(c.includes("muddy")||c.includes("green"))score-=35;if(c.includes("dark"))score-=40;if(s.includes("bad"))score-=25;if(s.includes("chemical"))score-=30;if(cl.includes("slightly"))score-=15;if(cl.includes("dirty"))score-=30;if(reportData.phKnown==="no"||reportData.ph==="")score-=10;if(!isNaN(p)&&(p<6||p>8.5))score-=25;return Math.max(0,Math.min(100,score))}
-function updateScoreUI(){let sc=reportData.score||0, deg=sc*3.6, color="#94a3b8", sub="No score yet", cls="";if(sc>=75){color="#16a34a";sub="Safe Zone";cls="safe"}else if(sc>=45){color="#f59e0b";sub="Moderate Zone";cls="mod"}else if(sc>0){color="#dc2626";sub="Unsafe Zone";cls="bad"}waterMeter.style.background=`conic-gradient(${color} ${deg}deg, #e2f7fb 0deg)`;scoreValue.innerText=sc;scoreValue.className=cls;scoreSub.innerText=sub;scoreText.innerText=sc?`${sub} — ${sc}/100`:"Circular score meter will update after report.";scoreText.className=cls}
-function updatePurificationSuggestion(){let t="Advice will appear after report.";if(reportData.result==="Safe")t="Water appears relatively safe, but filtering/boiling is still recommended.";else if(reportData.result==="Moderate Risk")t="Filter and boil water before use. Store in a clean container.";else if(reportData.result==="Unsafe")t="Do not drink directly. Boil, filter, or avoid until tested.";purificationBox.innerHTML=`<strong>Purification Suggestion:</strong><br>${t}`}
-function updateWarningBanner(){alertBanner.style.display=reportData.result==="Unsafe"?"block":"none"}
-function generateReportId(){reportCounter++;localStorage.setItem("waterBotReportCounter",reportCounter);let d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return`WS-${y}${m}${day}-${String(reportCounter).padStart(3,"0")}`}
+function chips(t){let a=t==="source"?["tap water","borewell","river","lake","tank"]:t==="color"?["clear","yellow","muddy","green","dark"]:t==="smell"?["no smell","bad smell","chemical smell"]:t==="clarity"?["clear","slightly dirty","dirty"]:t==="yesno"?["yes","no"]:t==="ph"?["5","6.5","7","8.8"]:["hi","check water","safety tips"];suggestionChips.innerHTML=a.map(x=>`<button class="chip" onclick="quickMsg('${x}')">${x}</button>`).join("")}
+function updateFields(){fieldSource.value=reportData.source;fieldColor.value=reportData.color;fieldSmell.value=reportData.smell;fieldClarity.value=reportData.clarity;fieldPh.value=reportData.ph}
+
+function smartDetect(text){
+  let t=text.toLowerCase();
+  if(t.includes("tap"))reportData.source="tap water";
+  if(t.includes("borewell"))reportData.source="borewell";
+  if(t.includes("river"))reportData.source="river water";
+  if(t.includes("lake"))reportData.source="lake water";
+  if(t.includes("tank"))reportData.source="tank water";
+
+  if(t.includes("clear"))reportData.color="clear";
+  if(t.includes("yellow"))reportData.color="yellow";
+  if(t.includes("muddy")||t.includes("brown"))reportData.color="muddy";
+  if(t.includes("green"))reportData.color="green";
+  if(t.includes("dark")||t.includes("black"))reportData.color="dark";
+
+  if(t.includes("no smell")||t.includes("odorless"))reportData.smell="no smell";
+  if(t.includes("bad smell")||t.includes("foul")||t.includes("stinky"))reportData.smell="bad smell";
+  if(t.includes("chemical")||t.includes("chlorine"))reportData.smell="chemical smell";
+
+  if(t.includes("slightly dirty"))reportData.clarity="slightly dirty";
+  else if(t.includes("dirty")||t.includes("cloudy")||t.includes("turbid"))reportData.clarity="dirty";
+  else if(t.includes("clear"))reportData.clarity="clear";
+
+  let phMatch=t.match(/(?:ph\s*(?:is|=)?\s*)?([0-9]+(?:\.[0-9]+)?)/);
+  if(phMatch){
+    let n=parseFloat(phMatch[1]);
+    if(n>=0 && n<=14){reportData.ph=String(n);reportData.phKnown="yes";}
+  }
+  liveUpdate();
+}
+
+function evaluateResult(){
+  let c=reportData.color.toLowerCase(),s=reportData.smell.toLowerCase(),cl=reportData.clarity.toLowerCase(),p=parseFloat(reportData.ph);
+  if(c.includes("muddy")||c.includes("green")||c.includes("dark")||s.includes("bad")||s.includes("chemical")||cl.includes("dirty")||(!isNaN(p)&&(p<6||p>8.5)))return"Unsafe";
+  if(c.includes("yellow")||cl.includes("slightly")||reportData.phKnown==="no"||reportData.ph==="")return"Moderate Risk";
+  if(c.includes("clear")&&s.includes("no smell")&&cl.includes("clear")&&!isNaN(p)&&p>=6.5&&p<=8)return"Safe";
+  return"Moderate Risk";
+}
+function calculateScore(){
+  let score=100,c=reportData.color.toLowerCase(),s=reportData.smell.toLowerCase(),cl=reportData.clarity.toLowerCase(),p=parseFloat(reportData.ph);
+  if(!reportData.source)score-=8;if(!reportData.color)score-=8;if(!reportData.smell)score-=8;if(!reportData.clarity)score-=8;
+  if(c.includes("yellow"))score-=15;if(c.includes("muddy")||c.includes("green"))score-=35;if(c.includes("dark"))score-=40;
+  if(s.includes("bad"))score-=25;if(s.includes("chemical"))score-=30;
+  if(cl.includes("slightly"))score-=15;if(cl.includes("dirty"))score-=30;
+  if(!reportData.ph)score-=8;if(!isNaN(p)&&(p<6||p>8.5))score-=25;
+  return Math.max(0,Math.min(100,score));
+}
+function liveUpdate(){
+  reportData.score=calculateScore();
+  reportData.result=evaluateResult();
+  updateFields();updateScoreUI();updatePurification();updateWarning();
+  latestResult.innerText=reportData.result||"N/A";
+}
+function updateScoreUI(){
+  let sc=reportData.score||0,color="#94a3b8";
+  if(sc>=75)color="#16a34a";else if(sc>=45)color="#f59e0b";else if(sc>0)color="#dc2626";
+  waterMeter.style.background=`conic-gradient(${color} ${sc*3.6}deg,#e2f7fb 0deg)`;
+  waterMeter.style.setProperty("--fill-height",sc+"%");
+  scoreValue.innerText=sc;
+  scoreSub.innerText=sc>=75?"Safe Zone":sc>=45?"Moderate Zone":sc>0?"Unsafe Zone":"No score yet";
+  scoreValue.className=sc>=75?"safe":sc>=45?"mod":sc>0?"bad":"";
+  scoreText.innerText=sc?`${scoreSub.innerText} — ${sc}/100`:"Meter updates on every important input.";
+  meterCard.className="meter-card "+(sc>=75?"result-pulse-safe":sc>=45?"result-pulse-mod":sc>0?"result-pulse-bad":"");
+}
+function updatePurification(){
+  let txt="Advice will appear here.";
+  if(reportData.result==="Safe")txt="Water seems relatively safe, but filtering/boiling is still recommended.";
+  if(reportData.result==="Moderate Risk")txt="Filter and boil water before use. Store in a clean container.";
+  if(reportData.result==="Unsafe")txt="Do not drink directly. Boil/filter or avoid until tested.";
+  purificationBox.innerHTML=`<strong>Purification Suggestion:</strong><br>${txt}`;
+}
+function updateWarning(){alertBanner.style.display=reportData.result==="Unsafe"?"block":"none"}
+
+function generateId(){reportCounter++;localStorage.setItem("waterBotReportCounter",reportCounter);let d=new Date();return`WS-${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}-${String(reportCounter).padStart(3,"0")}`}
 function saveHistory(r){let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]");h.unshift(r);localStorage.setItem("waterBotHistory",JSON.stringify(h));renderHistory();updateDashboard()}
-function updateDashboard(){let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]");totalChecks.innerText=h.length;safeCount.innerText=h.filter(x=>x.result==="Safe").length;moderateCount.innerText=h.filter(x=>x.result==="Moderate Risk").length;unsafeCount.innerText=h.filter(x=>x.result==="Unsafe").length;latestResult.innerText=h[0]?.result||"N/A";latestReportId.innerText=h[0]?.reportId||"N/A";let src={},max=0,common="Not available.";h.forEach(x=>{src[x.source]=(src[x.source]||0)+1;if(src[x.source]>max){max=src[x.source];common=`${x.source} (${src[x.source]})`}});mostCommonSource.innerText=common;unsafePercent.innerText=h.length?((h.filter(x=>x.result==="Unsafe").length/h.length)*100).toFixed(1)+"%":"0%";safePercent.innerText=h.length?((h.filter(x=>x.result==="Safe").length/h.length)*100).toFixed(1)+"%":"0%";let ph=h.map(x=>parseFloat(x.ph)).filter(x=>!isNaN(x));avgPh.innerText=ph.length?(ph.reduce((a,b)=>a+b,0)/ph.length).toFixed(2):"Not available."}
-function renderHistory(){let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]"),q=searchBox.value.toLowerCase();let f=h.filter(x=>!q||x.source.toLowerCase().includes(q)||x.result.toLowerCase().includes(q));historyContent.innerHTML=f.length?f.map(x=>{let cls=x.result==="Safe"?"tag-safe":x.result==="Moderate Risk"?"tag-mod":"tag-bad";return`<div class="history-item"><strong>${x.reportId}</strong><br>Source: ${x.source}<br>Color: ${x.color}<br>Smell: ${x.smell}<br>Clarity: ${x.clarity}<br>pH: ${x.ph}<br>Score: ${x.score}/100<br>Time: ${x.timestamp}<br><span class="tag ${cls}">${x.result}</span></div>`}).join(""):"No history available."}
-function finalizeReport(){reportData.timestamp=getCurrentDateTime();reportData.reportId=generateReportId();reportData.score=calculateScore();reportData.result=evaluateResult();updateScoreUI();updatePurificationSuggestion();updateWarningBanner();let msg=reportData.result==="Safe"?"Water appears relatively safe.":reportData.result==="Moderate Risk"?"Water may not be fully safe. Boil or filter before use.":"Water appears unsafe. Avoid direct use and purify immediately.";let summary=`Report ID: ${reportData.reportId}
+function updateDashboard(){
+  let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]");
+  totalChecks.innerText=h.length;safeCount.innerText=h.filter(x=>x.result==="Safe").length;moderateCount.innerText=h.filter(x=>x.result==="Moderate Risk").length;unsafeCount.innerText=h.filter(x=>x.result==="Unsafe").length;
+  latestReportId.innerText=h[0]?.reportId||"N/A";
+  let src={},max=0,common="Not available.";h.forEach(x=>{src[x.source]=(src[x.source]||0)+1;if(src[x.source]>max){max=src[x.source];common=`${x.source} (${src[x.source]})`}});mostCommonSource.innerText=common;
+  unsafePercent.innerText=h.length?((h.filter(x=>x.result==="Unsafe").length/h.length)*100).toFixed(1)+"%":"0%";
+  safePercent.innerText=h.length?((h.filter(x=>x.result==="Safe").length/h.length)*100).toFixed(1)+"%":"0%";
+  let ph=h.map(x=>parseFloat(x.ph)).filter(x=>!isNaN(x));avgPh.innerText=ph.length?(ph.reduce((a,b)=>a+b,0)/ph.length).toFixed(2):"Not available.";
+}
+function renderHistory(){
+  let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]"),q=searchBox.value.toLowerCase();
+  let f=h.filter(x=>!q||x.source.toLowerCase().includes(q)||x.result.toLowerCase().includes(q));
+  historyContent.innerHTML=f.length?f.map(x=>`<div class="history-item"><strong>${x.reportId}</strong><br>Source: ${x.source}<br>Color: ${x.color}<br>Smell: ${x.smell}<br>Clarity: ${x.clarity}<br>pH: ${x.ph}<br>Score: ${x.score}/100<br>Time: ${x.timestamp}<br><span class="tag ${x.result==="Safe"?"tag-safe":x.result==="Moderate Risk"?"tag-mod":"tag-bad"}">${x.result}</span></div>`).join(""):"No history available.";
+}
+function createReport(){
+  reportData.timestamp=now();reportData.reportId=generateId();liveUpdate();
+  let msg=reportData.result==="Safe"?"Water appears relatively safe.":reportData.result==="Moderate Risk"?"Water may not be fully safe. Boil or filter before use.":"Water appears unsafe. Avoid direct use and purify immediately.";
+  let summary=`Report ID: ${reportData.reportId}
 Report Time: ${reportData.timestamp}
-Source: ${reportData.source}
-Color: ${reportData.color}
-Smell: ${reportData.smell}
-Clarity: ${reportData.clarity}
+Source: ${reportData.source||"Not Provided"}
+Color: ${reportData.color||"Not Provided"}
+Smell: ${reportData.smell||"Not Provided"}
+Clarity: ${reportData.clarity||"Not Provided"}
 pH: ${reportData.ph||"Not Provided"}
 Water Quality Score: ${reportData.score}/100
 Result: ${reportData.result}
 
-${msg}`;reportContent.innerText=summary;saveHistory({...reportData,ph:reportData.ph||"Not Provided"});updateIntentUI(8);showPopup();setSuggestionChips("result");let reply=`Intent: water.check.result
-${msg}
+${msg}`;
+  reportContent.innerText=summary;
+  saveHistory({...reportData,source:reportData.source||"Unknown",color:reportData.color||"Not Provided",smell:reportData.smell||"Not Provided",clarity:reportData.clarity||"Not Provided",ph:reportData.ph||"Not Provided"});
+  latestReportId.innerText=reportData.reportId;showPopup();
+  return msg;
+}
+function generateManualReport(){createReport()}
 
-Type "health risk" or "safety tips" for more guidance.`;resetFlow(false);return reply}
-function getBotReply(msg){let t=msg.toLowerCase().trim();if(["hi","hello","hey"].includes(t)){updateIntentUI(0);setSuggestionChips("welcome");return"Hello 👋 Type 'check water' to begin."}if(t.includes("health risk")){updateIntentUI(9);return"Unsafe water may increase risk of cholera, typhoid and diarrhea."}if(t.includes("safety tips")||t.includes("tips")){updateIntentUI(10);return"Boil water, use filter, store in clean container, and avoid bad-smelling water."}if(t.includes("emergency")){updateIntentUI(11);return"If someone becomes sick, contact a doctor or nearby health center immediately."}if(t.includes("restart")){startNewCheck();return"Restarted. Type 'check water'."}if(t.includes("cancel")||t.includes("stop")){resetFlow();updateIntentUI(13);return"Process stopped. Type 'check water' to start again."}
-if(step===0){if(t.includes("check water")||t.includes("water safety")||t.includes("analyze water")){step=1;updateIntentUI(1);updateProgress();setSuggestionChips("source");return"Please tell me water source: tap water, borewell, river, lake, or tank water."}updateIntentUI(14);return"Please type 'check water' to continue."}
-if(step===1){reportData.source=msg;updateSummaryFields();step=2;updateIntentUI(2);updateProgress();setSuggestionChips("color");return"What is water color? Clear, muddy, yellow, green, or dark?"}
-if(step===2){reportData.color=msg;updateSummaryFields();step=3;updateIntentUI(3);updateProgress();setSuggestionChips("smell");return"Does water have smell? No smell, bad smell, or chemical smell?"}
-if(step===3){reportData.smell=msg;updateSummaryFields();step=4;updateIntentUI(4);updateProgress();setSuggestionChips("clarity");return"How does water look: clear, slightly dirty, or dirty?"}
-if(step===4){reportData.clarity=msg;updateSummaryFields();step=5;updateIntentUI(5);updateProgress();setSuggestionChips("yesno");return"Do you know pH value?"}
-if(step===5){reportData.phKnown=t;step=6;updateIntentUI(6);updateProgress();if(t==="yes"){setSuggestionChips("ph");return"Please enter pH value."}if(t==="no"){reportData.ph="";return finalizeReport()}return"Please answer yes or no."}
-if(step===6){if(isNaN(t))return"Please enter pH number like 7 or 6.5";reportData.ph=msg;updateSummaryFields();step=7;updateIntentUI(7);updateProgress();return finalizeReport()}
-return"Please type 'check water' to continue."}
-function sendMessage(){let m=userInput.value.trim();if(!m)return;addMessage(m,"user");userInput.value="";setTimeout(()=>addMessage(getBotReply(m),"bot"),220)}
+function botReply(msg){
+  let t=msg.toLowerCase().trim();
+  smartDetect(t);
+  if(["hi","hello","hey"].includes(t)){updateIntentUI(0);chips("welcome");return"Hello 👋 Type 'check water' to begin, or enter water details directly."}
+  if(t.includes("health risk")){updateIntentUI(9);return"Unsafe water may increase risk of cholera, typhoid and diarrhea."}
+  if(t.includes("safety tips")||t.includes("tips")){updateIntentUI(10);return"Boil water, use filter, store in clean container, and avoid bad-smelling water."}
+  if(t.includes("emergency")){updateIntentUI(11);return"If someone becomes sick, contact a doctor or nearby health center immediately."}
+  if(t.includes("restart")){startNewCheck();return"Restarted. Type 'check water'."}
+  if(t.includes("cancel")||t.includes("stop")){resetFlow();updateIntentUI(13);return"Process stopped. Type 'check water' to start again."}
+
+  if(step===0){
+    if(t.includes("check water")||t.includes("water safety")||t.includes("analyze water")){step=1;updateIntentUI(1);updateProgress();chips("source");return"Please tell water source: tap water, borewell, river, lake, or tank water."}
+    return"Details detected and live meter updated. You can continue with color, smell, clarity, or pH.";
+  }
+  if(step===1){if(!reportData.source)reportData.source=msg;step=2;updateIntentUI(2);updateProgress();chips("color");return"What is water color? Clear, muddy, yellow, green, or dark?"}
+  if(step===2){if(!reportData.color)reportData.color=msg;step=3;updateIntentUI(3);updateProgress();chips("smell");return"Does water have smell? No smell, bad smell, or chemical smell?"}
+  if(step===3){if(!reportData.smell)reportData.smell=msg;step=4;updateIntentUI(4);updateProgress();chips("clarity");return"How does water look: clear, slightly dirty, or dirty?"}
+  if(step===4){if(!reportData.clarity)reportData.clarity=msg;step=5;updateIntentUI(5);updateProgress();chips("yesno");return"Do you know pH value?"}
+  if(step===5){reportData.phKnown=t;if(t==="yes"){step=6;updateIntentUI(6);updateProgress();chips("ph");return"Please enter pH value."}if(t==="no"){let m=createReport();resetFlow(false);return`Intent: water.check.result\n${m}`}return"Please answer yes or no."}
+  if(step===6){let m=createReport();resetFlow(false);return`Intent: water.check.result\n${m}`}
+  return"Live meter updated.";
+}
+function sendMessage(){
+  let m=userInput.value.trim();if(!m)return;
+  addMessage(m,"user");userInput.value="";showTyping();
+  setTimeout(()=>{hideTyping();addMessage(botReply(m),"bot")},550);
+}
 function quickMsg(x){userInput.value=x;sendMessage()}
-function resetFlow(clear=true){step=0;reportData={source:"",color:"",smell:"",clarity:"",phKnown:"",ph:"",result:"",score:0,timestamp:"",reportId:""};updateIntentUI(0);updateProgress();updateSummaryFields();setSuggestionChips("welcome");if(clear){updateScoreUI();updatePurificationSuggestion();updateWarningBanner()}}
+function resetFlow(clear=true){step=0;reportData={source:"",color:"",smell:"",clarity:"",phKnown:"",ph:"",result:"",score:0,timestamp:"",reportId:""};updateIntentUI(0);updateProgress();updateFields();chips("welcome");if(clear){updateScoreUI();updatePurification();updateWarning()}}
 function startNewCheck(){chatBox.innerHTML=`<div class="bot-message">Hello, I am your AquaLab Water Safety Bot.
-Type "check water" to begin.</div>`;reportContent.innerText="No report generated yet.";resetFlow()}
-function runSampleDemo(){startNewCheck();["hi","check water","tap water","yellow","bad smell","dirty","yes","5"].forEach((x,i)=>setTimeout(()=>quickMsg(x),i*650))}
+Type "check water" or directly enter details like "muddy water bad smell ph 5".</div><div class="typing" id="typingDots"><span></span><span></span><span></span></div>`;window.typingDots=document.getElementById("typingDots");reportContent.innerText="No report generated yet.";resetFlow()}
+function runSampleDemo(){startNewCheck();["hi","check water","tap water","yellow","bad smell","dirty","yes","5"].forEach((x,i)=>setTimeout(()=>quickMsg(x),i*700))}
 function clearHistory(){localStorage.removeItem("waterBotHistory");renderHistory();updateDashboard()}
 function resetDashboard(){localStorage.removeItem("waterBotHistory");localStorage.removeItem("waterBotReportCounter");reportCounter=0;startNewCheck();renderHistory();updateDashboard()}
 function exportCSV(){let h=JSON.parse(localStorage.getItem("waterBotHistory")||"[]");if(!h.length)return alert("No history available.");let rows=[["Report ID","Source","Color","Smell","Clarity","pH","Score","Result","Time"],...h.map(x=>[x.reportId,x.source,x.color,x.smell,x.clarity,x.ph,x.score,x.result,x.timestamp])];let csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="water-safety-history.csv";a.click()}
-function downloadReport(){let c=reportContent.innerText;if(!c||c==="No report generated yet.")return alert("No report available.");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([c],{type:"text/plain"}));a.download="water-report.txt";a.click()}
+function downloadReport(){let c=reportContent.innerText;if(!c||c==="No report generated yet.")return alert("No report available.");let file="water-report-"+now().replaceAll(" ","-").replaceAll(",","").replaceAll(":","-")+".txt";let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([c],{type:"text/plain"}));a.download=file;a.click()}
 function printReport(){let c=reportContent.innerText;if(!c||c==="No report generated yet.")return alert("No report available.");let w=window.open("");w.document.write("<pre style='font-family:Arial;padding:20px;line-height:1.7'>"+c+"</pre>");w.print()}
 function showPopup(){successPopup.classList.add("show")}
 function closePopup(){successPopup.classList.remove("show")}
