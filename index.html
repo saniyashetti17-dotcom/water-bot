@@ -6,21 +6,21 @@
   <title>Water Safety Awareness Bot</title>
   <style>
     :root {
-      --bg1: #eef6ff;
-      --bg2: #f9fcff;
+      --bg1: #e9fbff;
+      --bg2: #f8feff;
       --card: #ffffff;
-      --text: #222;
-      --muted: #5f6b7a;
-      --primary: #0288d1;
-      --primary2: #26c6da;
-      --border: #d9ebf7;
-      --bot: #e8f7ff;
-      --user: #d8f3dc;
-      --safe: #16a34a;
-      --moderate: #f59e0b;
-      --unsafe: #dc2626;
+      --text: #16324f;
+      --muted: #5f7c8a;
+      --primary: #00acc1;
+      --primary2: #4dd0e1;
+      --border: #d8f3f7;
+      --bot: #e6fafd;
+      --user: #dff7f2;
+      --safe: #2e7d32;
+      --moderate: #fb8c00;
+      --unsafe: #e53935;
       --neutral: #6b7280;
-      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --shadow: 0 12px 28px rgba(0, 172, 193, 0.1);
     }
 
     * {
@@ -31,7 +31,10 @@
     }
 
     body {
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      background:
+        radial-gradient(circle at top left, #dff9ff 0%, transparent 30%),
+        radial-gradient(circle at top right, #e8ffff 0%, transparent 26%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
       color: var(--text);
       padding: 20px;
     }
@@ -51,16 +54,18 @@
       box-shadow: var(--shadow);
       font-weight: bold;
       line-height: 1.6;
+      animation: fadeIn 0.5s ease;
     }
 
     .header {
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      background: linear-gradient(135deg, #00acc1, #4dd0e1, #80deea);
       color: white;
-      padding: 26px;
-      border-radius: 22px;
+      padding: 28px;
+      border-radius: 24px;
       text-align: center;
       margin-bottom: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 14px 30px rgba(0, 172, 193, 0.18);
+      animation: fadeIn 0.5s ease;
     }
 
     .header h1 {
@@ -84,11 +89,16 @@
     .top-actions button {
       border: none;
       background: white;
-      color: #0277bd;
+      color: #00838f;
       padding: 10px 14px;
       border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .top-actions button:hover {
+      transform: scale(1.05);
     }
 
     .dashboard-grid {
@@ -98,13 +108,33 @@
       margin-bottom: 20px;
     }
 
+    .dash-card,
+    .insight-card,
+    .card,
+    .panel,
+    .score-card,
+    .disease-card {
+      transition: all 0.3s ease;
+    }
+
+    .dash-card:hover,
+    .insight-card:hover,
+    .card:hover,
+    .panel:hover,
+    .score-card:hover,
+    .disease-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 18px 30px rgba(0, 172, 193, 0.14);
+    }
+
     .dash-card {
-      background: var(--card);
+      background: linear-gradient(180deg, #ffffff, #f4fdff);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 20px;
+      padding: 18px;
       text-align: center;
       box-shadow: var(--shadow);
+      animation: fadeIn 0.5s ease;
     }
 
     .dash-card .icon {
@@ -124,9 +154,9 @@
       word-break: break-word;
     }
 
-    .safe-text { color: var(--safe); }
-    .moderate-text { color: var(--moderate); }
-    .unsafe-text { color: var(--unsafe); }
+    .safe-text { color: var(--safe); text-shadow: 0 0 10px rgba(46,125,50,0.18); }
+    .moderate-text { color: var(--moderate); text-shadow: 0 0 10px rgba(251,140,0,0.18); }
+    .unsafe-text { color: var(--unsafe); text-shadow: 0 0 10px rgba(229,57,53,0.22); }
     .neutral-text { color: var(--neutral); }
 
     .insight-grid {
@@ -139,14 +169,15 @@
     .insight-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 16px;
       box-shadow: var(--shadow);
+      animation: fadeIn 0.55s ease;
     }
 
     .insight-card h3 {
       font-size: 16px;
-      color: #0277bd;
+      color: #0097a7;
       margin-bottom: 8px;
     }
 
@@ -163,20 +194,27 @@
       margin-bottom: 20px;
     }
 
-    .card {
-      background: var(--card);
-      border-radius: 18px;
+    .card,
+    .panel,
+    .chat-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 22px;
       padding: 20px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .card {
       margin-bottom: 20px;
     }
 
     .card h2 {
-      color: #0277bd;
+      color: #0097a7;
       margin-bottom: 12px;
       font-size: 22px;
-      border-left: 5px solid #0277bd;
+      border-left: 5px solid #0097a7;
       padding-left: 10px;
     }
 
@@ -208,29 +246,21 @@
     }
 
     .intent-list li.active {
-      background: #e8f7ff;
-      border: 2px solid #42a5f5;
+      background: #e6fafd;
+      border: 2px solid #4dd0e1;
       font-weight: bold;
     }
 
     .intent-name {
-      color: #1565c0;
+      color: #00838f;
       font-weight: bold;
     }
 
-    .chat-card {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
     .chat-header {
-      background: linear-gradient(135deg, #0288d1, #42a5f5);
+      background: linear-gradient(135deg, #0097a7, #26c6da);
       color: white;
-      padding: 16px;
-      border-radius: 14px;
+      padding: 18px;
+      border-radius: 18px;
       text-align: center;
       margin-bottom: 14px;
     }
@@ -262,8 +292,8 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #26c6da, #0288d1);
-      transition: width 0.25s ease;
+      background: linear-gradient(90deg, #4dd0e1, #00acc1);
+      transition: width 0.35s ease;
     }
 
     .progress-text {
@@ -281,17 +311,19 @@
 
     .chip {
       border: 1px solid var(--border);
-      background: #f4fbff;
-      color: #0277bd;
+      background: #f0fdff;
+      color: #0097a7;
       border-radius: 999px;
       padding: 8px 12px;
       font-size: 13px;
       cursor: pointer;
       font-weight: bold;
+      transition: all 0.25s ease;
     }
 
     .chip:hover {
-      background: #e8f7ff;
+      background: #e6fafd;
+      transform: translateY(-1px);
     }
 
     .chat-box {
@@ -299,7 +331,7 @@
       overflow-y: auto;
       background: #f8fcff;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px;
       margin-bottom: 14px;
     }
@@ -312,17 +344,20 @@
       line-height: 1.6;
       font-size: 14px;
       white-space: pre-line;
+      animation: messageFade 0.3s ease;
     }
 
     .bot-message {
       background: var(--bot);
-      color: #0f4c75;
+      color: #0f4c5c;
+      border: 1px solid #c7eef4;
       border-top-left-radius: 4px;
     }
 
     .user-message {
       background: var(--user);
-      color: #1b5e20;
+      color: #165f4d;
+      border: 1px solid #c8ece2;
       margin-left: auto;
       border-top-right-radius: 4px;
     }
@@ -335,19 +370,23 @@
     }
 
     .quick-buttons button,
-    .tool-buttons button {
+    .tool-buttons button,
+    .history-tools button {
       border: none;
-      background: #0277bd;
+      background: #0097a7;
       color: white;
       padding: 10px 14px;
       border-radius: 10px;
       cursor: pointer;
       font-size: 13px;
+      transition: all 0.25s ease;
     }
 
     .quick-buttons button:hover,
-    .tool-buttons button:hover {
-      background: #015f96;
+    .tool-buttons button:hover,
+    .history-tools button:hover {
+      background: #007c91;
+      transform: scale(1.04);
     }
 
     .danger-btn {
@@ -414,36 +453,67 @@
     .score-card {
       border: 1px solid var(--border);
       background: #fbfeff;
-      border-radius: 14px;
-      padding: 14px;
+      border-radius: 16px;
+      padding: 18px;
       margin-bottom: 14px;
+      text-align: center;
     }
 
     .score-card h3 {
-      color: #0277bd;
-      margin-bottom: 8px;
+      color: #0097a7;
+      margin-bottom: 12px;
       font-size: 18px;
     }
 
-    .score-value {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .meter {
-      width: 100%;
-      height: 18px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: #e5e7eb;
+    .water-meter-wrap {
       display: flex;
-      margin-bottom: 8px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
     }
 
-    .meter-safe { background: var(--safe); }
-    .meter-moderate { background: var(--moderate); }
-    .meter-unsafe { background: var(--unsafe); }
+    .water-meter {
+      --size: 180px;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background:
+        conic-gradient(var(--meter-color, #6b7280) calc(var(--meter-deg, 0) * 1deg), #e5e7eb 0deg);
+      transition: background 0.6s ease;
+      animation: pulseMeter 2.2s infinite ease-in-out;
+    }
+
+    .water-meter::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: inset 0 0 18px rgba(0, 172, 193, 0.08);
+    }
+
+    .water-meter-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 110px;
+    }
+
+    .score-value {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .score-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
 
     .suggestion-box {
       background: #f1fbff;
@@ -454,6 +524,7 @@
       line-height: 1.7;
       color: #333;
       margin-bottom: 14px;
+      animation: fadeIn 0.45s ease;
     }
 
     .disease-grid {
@@ -471,7 +542,7 @@
     }
 
     .disease-card h4 {
-      color: #0277bd;
+      color: #0097a7;
       margin-bottom: 6px;
     }
 
@@ -488,16 +559,8 @@
       margin-top: 20px;
     }
 
-    .panel {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
     .panel h3 {
-      color: #0277bd;
+      color: #0097a7;
       margin-bottom: 12px;
       font-size: 20px;
     }
@@ -517,16 +580,6 @@
       margin-bottom: 10px;
     }
 
-    .history-tools button {
-      border: none;
-      background: #0288d1;
-      color: white;
-      padding: 9px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
     .search-box {
       width: 100%;
       padding: 10px 12px;
@@ -542,6 +595,7 @@
       padding: 10px;
       margin-bottom: 10px;
       background: #f8fcff;
+      animation: fadeIn 0.35s ease;
     }
 
     .tag {
@@ -571,7 +625,7 @@
     }
 
     .tips-box strong {
-      color: #0277bd;
+      color: #0097a7;
     }
 
     .disclaimer {
@@ -615,11 +669,6 @@
       animation: pop 0.25s ease;
     }
 
-    @keyframes pop {
-      from { transform: scale(0.88); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
     .check {
       width: 74px;
       height: 74px;
@@ -632,6 +681,38 @@
       font-size: 38px;
       margin: 0 auto 12px;
       box-shadow: 0 0 0 10px rgba(34, 197, 94, 0.12);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.88); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes messageFade {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulseMeter {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
     }
 
     @media (max-width: 1100px) {
@@ -852,10 +933,14 @@ Type:
         </div>
 
         <div class="score-card">
-          <h3>Water Quality Score</h3>
-          <div class="score-value" id="scoreValue">0 / 100</div>
-          <div class="meter">
-            <div id="scoreMeter" style="width:0%;"></div>
+          <h3>Circular Water Quality Meter</h3>
+          <div class="water-meter-wrap">
+            <div class="water-meter" id="waterMeter">
+              <div class="water-meter-inner">
+                <div class="score-value" id="scoreValue">0</div>
+                <div class="score-sub" id="scoreSub">No score yet</div>
+              </div>
+            </div>
           </div>
           <div id="scoreText" class="neutral-text">No score calculated yet.</div>
         </div>
@@ -972,6 +1057,22 @@ Type:
       14: "Default Fallback Intent"
     };
 
+    function getCurrentDateTime() {
+      const now = new Date();
+      const datePart = now.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+      const timePart = now.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+      return `${datePart}, ${timePart}`;
+    }
+
     function addMessage(message, sender) {
       const chatBox = document.getElementById("chatBox");
       const div = document.createElement("div");
@@ -1011,25 +1112,15 @@ Type:
       const box = document.getElementById("suggestionChips");
       let chips = [];
 
-      if (type === "welcome") {
-        chips = ["hi", "hello", "check water"];
-      } else if (type === "source") {
-        chips = ["tap water", "borewell", "river water", "lake water"];
-      } else if (type === "color") {
-        chips = ["clear", "muddy", "yellow", "green", "dark"];
-      } else if (type === "smell") {
-        chips = ["no smell", "bad smell", "chemical smell"];
-      } else if (type === "clarity") {
-        chips = ["clear", "slightly dirty", "dirty"];
-      } else if (type === "yesno") {
-        chips = ["yes", "no"];
-      } else if (type === "ph") {
-        chips = ["5", "6.5", "7", "8"];
-      } else if (type === "result") {
-        chips = ["health risk", "safety tips", "restart"];
-      } else {
-        chips = ["check water"];
-      }
+      if (type === "welcome") chips = ["hi", "hello", "check water"];
+      else if (type === "source") chips = ["tap water", "borewell", "river water", "lake water"];
+      else if (type === "color") chips = ["clear", "muddy", "yellow", "green", "dark"];
+      else if (type === "smell") chips = ["no smell", "bad smell", "chemical smell"];
+      else if (type === "clarity") chips = ["clear", "slightly dirty", "dirty"];
+      else if (type === "yesno") chips = ["yes", "no"];
+      else if (type === "ph") chips = ["5", "6.5", "7", "8"];
+      else if (type === "result") chips = ["health risk", "safety tips", "restart"];
+      else chips = ["check water"];
 
       box.innerHTML = chips
         .map(c => `<button class="chip" onclick="quickMsg('${c.replace(/'/g, "\\'")}')">${c}</button>`)
@@ -1058,27 +1149,21 @@ Type:
         smell.includes("chemical") ||
         clarity.includes("dirty") ||
         (!isNaN(phVal) && (phVal < 6 || phVal > 8.5))
-      ) {
-        return "Unsafe";
-      }
+      ) return "Unsafe";
 
       if (
         color.includes("yellow") ||
         clarity.includes("slightly") ||
         reportData.phKnown === "no" ||
         reportData.ph === ""
-      ) {
-        return "Moderate Risk";
-      }
+      ) return "Moderate Risk";
 
       if (
         color.includes("clear") &&
         smell.includes("no smell") &&
         clarity.includes("clear") &&
         (!isNaN(phVal) && phVal >= 6.5 && phVal <= 8)
-      ) {
-        return "Safe";
-      }
+      ) return "Safe";
 
       return "Moderate Risk";
     }
@@ -1094,17 +1179,14 @@ Type:
       if (color.includes("muddy")) score -= 35;
       if (color.includes("green")) score -= 35;
       if (color.includes("dark")) score -= 40;
-
       if (smell.includes("bad")) score -= 25;
       if (smell.includes("chemical")) score -= 30;
-
       if (clarity.includes("slightly")) score -= 15;
       if (clarity.includes("dirty")) score -= 30;
-
       if (reportData.phKnown === "no" || reportData.ph === "") score -= 10;
+
       if (!isNaN(phVal)) {
         if (phVal < 6 || phVal > 8.5) score -= 25;
-        else if (phVal >= 6.5 && phVal <= 8) score += 0;
       }
 
       if (score < 0) score = 0;
@@ -1115,22 +1197,29 @@ Type:
     function updateScoreUI() {
       const score = reportData.score || 0;
       const value = document.getElementById("scoreValue");
-      const meter = document.getElementById("scoreMeter");
+      const sub = document.getElementById("scoreSub");
       const text = document.getElementById("scoreText");
+      const meter = document.getElementById("waterMeter");
 
-      value.innerText = `${score} / 100`;
-      meter.style.width = `${score}%`;
+      value.innerText = score;
+      meter.style.setProperty("--meter-deg", (score / 100) * 360);
 
       if (score >= 75) {
-        meter.className = "meter-safe";
+        meter.style.setProperty("--meter-color", "#2e7d32");
+        value.className = "score-value safe-text";
+        sub.innerText = "Safe Zone";
         text.className = "safe-text";
         text.innerText = "Low risk. Water appears relatively safe.";
       } else if (score >= 45) {
-        meter.className = "meter-moderate";
+        meter.style.setProperty("--meter-color", "#fb8c00");
+        value.className = "score-value moderate-text";
+        sub.innerText = "Moderate Zone";
         text.className = "moderate-text";
         text.innerText = "Moderate risk. Purification is recommended.";
       } else {
-        meter.className = "meter-unsafe";
+        meter.style.setProperty("--meter-color", "#e53935");
+        value.className = "score-value unsafe-text";
+        sub.innerText = "Unsafe Zone";
         text.className = "unsafe-text";
         text.innerText = "High risk. Avoid direct drinking.";
       }
@@ -1141,25 +1230,21 @@ Type:
       let text = "";
 
       if (reportData.result === "Safe") {
-        text = "Purification Suggestion: Water appears relatively safe, but it is still recommended to boil or filter it before drinking.";
+        text = "Water appears relatively safe, but it is still recommended to boil or filter it before drinking.";
       } else if (reportData.result === "Moderate Risk") {
-        text = "Purification Suggestion: Use a water filter and boil the water before use. Store it in a clean container.";
+        text = "Use a water filter and boil the water before use. Store it in a clean container.";
       } else if (reportData.result === "Unsafe") {
-        text = "Purification Suggestion: Do not drink this water directly. Use proper purification, boiling, or avoid usage until tested.";
+        text = "Do not drink this water directly. Use proper purification, boiling, or avoid usage until tested.";
       } else {
-        text = "Purification Suggestion: Water purification advice will appear here after the result is generated.";
+        text = "Water purification advice will appear here after the result is generated.";
       }
 
-      box.innerHTML = `<strong>Purification Suggestion:</strong><br>${text.replace("Purification Suggestion: ", "")}`;
+      box.innerHTML = `<strong>Purification Suggestion:</strong><br>${text}`;
     }
 
     function updateWarningBanner() {
       const banner = document.getElementById("alertBanner");
-      if (reportData.result === "Unsafe") {
-        banner.style.display = "block";
-      } else {
-        banner.style.display = "none";
-      }
+      banner.style.display = reportData.result === "Unsafe" ? "block" : "none";
     }
 
     function updateDashboard() {
@@ -1200,9 +1285,7 @@ Type:
       document.getElementById("unsafePercent").innerText = total ? `${((unsafe / total) * 100).toFixed(1)}%` : "0%";
       document.getElementById("safePercent").innerText = total ? `${((safe / total) * 100).toFixed(1)}%` : "0%";
 
-      const phValues = history
-        .map(x => parseFloat(x.ph))
-        .filter(v => !isNaN(v));
+      const phValues = history.map(x => parseFloat(x.ph)).filter(v => !isNaN(v));
       const avg = phValues.length
         ? (phValues.reduce((a, b) => a + b, 0) / phValues.length).toFixed(2)
         : "Not available.";
@@ -1278,10 +1361,7 @@ Type:
         return;
       }
 
-      const rows = [
-        ["Report ID", "Source", "Color", "Smell", "Clarity", "pH", "Score", "Result", "Time"]
-      ];
-
+      const rows = [["Report ID", "Source", "Color", "Smell", "Clarity", "pH", "Score", "Result", "Time"]];
       history.forEach(item => {
         rows.push([
           item.reportId,
@@ -1381,47 +1461,8 @@ Type:
       }, 250);
     }
 
-    function evaluateResult() {
-      const color = reportData.color.toLowerCase();
-      const smell = reportData.smell.toLowerCase();
-      const clarity = reportData.clarity.toLowerCase();
-      const phVal = parseFloat(reportData.ph);
-
-      if (
-        color.includes("muddy") ||
-        color.includes("green") ||
-        color.includes("dark") ||
-        smell.includes("bad") ||
-        smell.includes("chemical") ||
-        clarity.includes("dirty") ||
-        (!isNaN(phVal) && (phVal < 6 || phVal > 8.5))
-      ) {
-        return "Unsafe";
-      }
-
-      if (
-        color.includes("yellow") ||
-        clarity.includes("slightly") ||
-        reportData.phKnown === "no" ||
-        reportData.ph === ""
-      ) {
-        return "Moderate Risk";
-      }
-
-      if (
-        color.includes("clear") &&
-        smell.includes("no smell") &&
-        clarity.includes("clear") &&
-        (!isNaN(phVal) && phVal >= 6.5 && phVal <= 8)
-      ) {
-        return "Safe";
-      }
-
-      return "Moderate Risk";
-    }
-
     function finalizeReport() {
-      reportData.timestamp = new Date().toLocaleString();
+      reportData.timestamp = getCurrentDateTime();
       reportData.reportId = generateReportId();
       reportData.score = calculateScore();
       reportData.result = evaluateResult();
@@ -1630,6 +1671,12 @@ Type "health risk" for disease info or "safety tips" for prevention.`;
       }, 700);
     }
 
+    function clearHistory() {
+      localStorage.removeItem("waterBotHistory");
+      renderHistory();
+      updateDashboard();
+    }
+
     function resetDashboard() {
       localStorage.removeItem("waterBotHistory");
       localStorage.removeItem("waterBotReportCounter");
@@ -1643,6 +1690,10 @@ Type "health risk" for disease info or "safety tips" for prevention.`;
       document.getElementById("unsafePercent").innerText = "0%";
       document.getElementById("safePercent").innerText = "0%";
       document.getElementById("avgPh").innerText = "Not available.";
+      document.getElementById("reportContent").innerText = "No report generated yet.";
+      updateScoreUI();
+      updatePurificationSuggestion();
+      updateWarningBanner();
     }
 
     document.getElementById("userInput").addEventListener("keypress", function(e) {
